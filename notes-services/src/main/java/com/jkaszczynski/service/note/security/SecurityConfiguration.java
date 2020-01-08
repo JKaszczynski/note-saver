@@ -1,5 +1,7 @@
 package com.jkaszczynski.service.note.security;
 
+import com.jkaszczynski.service.note.security.converters.KeycloakRealmRoleConverter;
+import com.jkaszczynski.service.note.security.converters.UsernameSubClaimConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri(jwksUri).build();
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(jwksUri).build();
+        jwtDecoder.setClaimSetConverter(new UsernameSubClaimConverter());
+        return jwtDecoder;
     }
 }
