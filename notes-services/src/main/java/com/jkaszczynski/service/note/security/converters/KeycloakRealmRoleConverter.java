@@ -1,4 +1,4 @@
-package com.jkaszczynski.service.note.security;
+package com.jkaszczynski.service.note.security.converters;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
