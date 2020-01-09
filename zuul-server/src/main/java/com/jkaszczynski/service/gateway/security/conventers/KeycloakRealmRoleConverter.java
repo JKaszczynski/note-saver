@@ -1,4 +1,4 @@
-package com.jkaszczynski.service.gateway.security;
+package com.jkaszczynski.service.gateway.security.conventers;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
