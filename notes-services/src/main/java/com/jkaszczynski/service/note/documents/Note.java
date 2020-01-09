@@ -1,7 +1,7 @@
 package com.jkaszczynski.service.note.documents;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +16,7 @@ public class Note {
     @Id
     private String id;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String username;
 
     private String note;
