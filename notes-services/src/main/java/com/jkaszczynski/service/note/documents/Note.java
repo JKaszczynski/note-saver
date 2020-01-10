@@ -14,6 +14,7 @@ import java.util.Set;
 @Setter
 public class Note {
     @Id
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String id;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -23,5 +24,6 @@ public class Note {
 
     private Set<String> tags = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime date = LocalDateTime.now();
 }

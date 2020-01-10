@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RepositoryRestController
+@RequestMapping(value = "/notes")
 public class NoteController {
 
     private NoteRepository noteRepository;
@@ -27,7 +28,7 @@ public class NoteController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/notes", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> insert(@RequestBody Note note) {
         note.setUsername(userService.getAuthenticatedUser());
         Note insertedNote = noteRepository.insert(note);
@@ -35,17 +36,13 @@ public class NoteController {
         return ResponseEntity.ok(HateoasProcessor.process(insertedNote));
     }
 
-    @RequestMapping(value = "/notes", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> findAllByUsername(@RequestParam String username) {
-        if (isUserAuthorized(username)) {
+        if (userService.isUserAuthorized(username)) {
             List<Note> notes = noteRepository.findAllByUsername(username);
             return ResponseEntity.ok(HateoasProcessor.process(notes));
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ArrayList<>());
         }
-    }
-
-    private boolean isUserAuthorized(String username) {
-        return username.equals(userService.getAuthenticatedUser()) || userService.hasAuthenticatedUserRoleAdmin();
     }
 }
