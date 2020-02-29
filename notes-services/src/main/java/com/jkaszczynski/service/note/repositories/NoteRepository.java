@@ -2,9 +2,13 @@ package com.jkaszczynski.service.note.repositories;
 
 import com.jkaszczynski.service.note.documents.Note;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +31,13 @@ public interface NoteRepository extends MongoRepository<Note, String> {
     @PreAuthorize("hasRole('user')")
     void deleteById(@NonNull String s);
 
-    @PreAuthorize("hasRole('user')")
+    @GetMapping
+    @RestResource(path = "username")
+    @PreAuthorize("@userService.isUserAuthorized(#username)")
     List<Note> findAllByUsername(@NonNull String username);
+
+    @Override
+    @NonNull
+    @PreAuthorize("hasRole('user')")
+    <S extends Note> S save(@NonNull S s);
 }

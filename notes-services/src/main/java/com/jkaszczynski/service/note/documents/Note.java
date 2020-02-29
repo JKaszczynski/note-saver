@@ -2,7 +2,9 @@ package com.jkaszczynski.service.note.documents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -24,6 +26,11 @@ public class Note {
 
     private Set<String> tags = new HashSet<>();
 
+    @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime created;
+
+    @LastModifiedDate
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime lastModified;
 }

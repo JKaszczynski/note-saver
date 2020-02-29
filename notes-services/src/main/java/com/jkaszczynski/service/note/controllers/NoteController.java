@@ -10,10 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RepositoryRestController
 @RequestMapping(value = "/notes")
@@ -33,16 +29,6 @@ public class NoteController {
         note.setUsername(userService.getAuthenticatedUser());
         Note insertedNote = noteRepository.insert(note);
 
-        return ResponseEntity.ok(HateoasProcessor.process(insertedNote));
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> findAllByUsername(@RequestParam String username) {
-        if (userService.isUserAuthorized(username)) {
-            List<Note> notes = noteRepository.findAllByUsername(username);
-            return ResponseEntity.ok(HateoasProcessor.process(notes));
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ArrayList<>());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(HateoasProcessor.process(insertedNote));
     }
 }
