@@ -1,0 +1,19 @@
+server:
+  port: 8101
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            jwk-set-uri: http://192.168.178.63:12001/auth/realms/note-saver/protocol/openid-connect/certs
+  data:
+    rest:
+      basePath: /api
+    mongodb:
+      database: notesaver
+      username: jkaszczynski
+      password: haslo123
+      host: 192.168.178.63
+      port: 27017

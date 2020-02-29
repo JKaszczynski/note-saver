@@ -1,0 +1,19 @@
+server:
+  port: 8104
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: note-saver
+            client-secret: 83389328-9886-40df-ab79-e152087d984b
+        provider:
+          keycloak:
+            token-uri: http://192.168.178.63:12001/auth/realms/note-saver/protocol/openid-connect/token
+  application:
+    name: authservices
+  cloud:
+    config:
+      uri: http://localhost:9000

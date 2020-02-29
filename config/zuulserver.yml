@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            issuer-uri: http://192.168.178.63:12001/auth/realms/note-saver
+            client-id: note-saver
+            client-secret: 83389328-9886-40df-ab79-e152087d984b
+        provider:
+          keycloak:
+            token-uri: ${spring.security.oauth2.client.registration.keycloak.issuer-uri}/protocol/openid-connect/token
+            jwk-set-uri: ${spring.security.oauth2.client.registration.keycloak.issuer-uri}/protocol/openid-connect/certs
+
+zuul:
+  routes:
+    auth_services:
+      path: /oauth/**
+      serviceId: authservices
+      stripPrefix: false
+    notes_services:
+      path: /api/notes/**
+      serviceId: noteservices
+      stripPrefix: false
+  sensitiveHeaders: Cookie,Set-Cookie
